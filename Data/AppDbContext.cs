@@ -11,6 +11,6 @@ namespace Libreria_CAAR.Data
 
         }
 
-        public DbSet<Book> Books { get;set;}
+        public DbSet<Books> Books { get;set;}
     }
 }

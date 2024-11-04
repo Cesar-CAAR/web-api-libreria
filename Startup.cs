@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore.SqlServer;
 using Microsoft.EntityFrameworkCore;
+using Libreria_CAAR.Data.Services;
 
 namespace Libreria_CAAR
 {
@@ -36,6 +37,9 @@ namespace Libreria_CAAR
             services.AddControllers();
             // Configurar DBContext con SQL
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
+
+            // Configurar el servicio para que pueda ser usado
+            services.AddTransient<BooksService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Libreria_CAAR", Version = "v1" });
@@ -62,6 +66,7 @@ namespace Libreria_CAAR
             {
                 endpoints.MapControllers();
             });
+            AppDbInitializer.Seed(app);
         }
     }
 }

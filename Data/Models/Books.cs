@@ -2,7 +2,7 @@
 
 namespace Libreria_CAAR.Data.Models
 {
-    public class Book
+    public class Books
     {
         public int Id { get; set; }
         public string Tutilo { get; set; }
