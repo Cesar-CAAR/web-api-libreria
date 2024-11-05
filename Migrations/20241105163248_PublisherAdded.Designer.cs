@@ -4,57 +4,22 @@ using Libreria_CAAR.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Libreria_CAAR.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105163248_PublisherAdded")]
+    partial class PublisherAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Libreria_CAAR.Data.Models.Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("FullName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Authors");
-                });
-
-            modelBuilder.Entity("Libreria_CAAR.Data.Models.Book_Author", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AuthorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("BookId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AuthorId");
-
-                    b.HasIndex("BookId");
-
-                    b.ToTable("Book_Authors");
-                });
 
             modelBuilder.Entity("Libreria_CAAR.Data.Models.Books", b =>
                 {
@@ -112,26 +77,7 @@ namespace Libreria_CAAR.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publishers");
-                });
-
-            modelBuilder.Entity("Libreria_CAAR.Data.Models.Book_Author", b =>
-                {
-                    b.HasOne("Libreria_CAAR.Data.Models.Author", "Author")
-                        .WithMany("Book_Author")
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Libreria_CAAR.Data.Models.Books", "Book")
-                        .WithMany("Book_Author")
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Author");
-
-                    b.Navigation("Book");
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("Libreria_CAAR.Data.Models.Books", b =>
@@ -143,16 +89,6 @@ namespace Libreria_CAAR.Migrations
                         .IsRequired();
 
                     b.Navigation("Publisher");
-                });
-
-            modelBuilder.Entity("Libreria_CAAR.Data.Models.Author", b =>
-                {
-                    b.Navigation("Book_Author");
-                });
-
-            modelBuilder.Entity("Libreria_CAAR.Data.Models.Books", b =>
-                {
-                    b.Navigation("Book_Author");
                 });
 
             modelBuilder.Entity("Libreria_CAAR.Data.Models.Publisher", b =>

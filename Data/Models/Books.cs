@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Libreria_CAAR.Data.Models
 {
@@ -14,5 +15,11 @@ namespace Libreria_CAAR.Data.Models
         public string Autor { get; set; }
         public string CoverUrl { get; set; }
         public DateTime DateAdded { get; set; }
+
+
+        // Propiedades de navegación (en esta parte es donde "mapeamos")
+        public int PublisherId { get; set; }
+        public Publisher Publisher { get; set; }
+        public List<Book_Author> Book_Author { get; set; }
     }
 }
