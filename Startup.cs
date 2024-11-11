@@ -34,12 +34,20 @@ namespace Libreria_CAAR
         public void ConfigureServices(IServiceCollection services)
         {
 
+
+
             services.AddControllers();
             // Configurar DBContext con SQL
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(ConnectionString));
 
+
             // Configurar el servicio para que pueda ser usado
             services.AddTransient<BooksService>();
+            services.AddTransient<AuthorsService>();
+            services.AddTransient<PublishersService>();
+
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Libreria_CAAR", Version = "v1" });
@@ -66,7 +74,7 @@ namespace Libreria_CAAR
             {
                 endpoints.MapControllers();
             });
-            AppDbInitializer.Seed(app);
+            //AppDbInitializer.Seed(app);
         }
     }
 }
