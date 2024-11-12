@@ -55,7 +55,22 @@ namespace Libreria_CAAR.Data.Services
 
 
         // Método que nos permite obtener el libro que estamos pidiendo de la BD
-        public Books GetBookById(int bookid) => _context.Books.FirstOrDefault(n => n.Id == bookid);
+        public BookWithAuthorsVM GetBookById(int bookid)
+        {
+            var _bookWithAuthors = _context.Books.Where(n => n.Id == bookid).Select(book => new BookWithAuthorsVM()
+            {
+                Tutilo = book.Tutilo,
+                Descripcion = book.Descripcion,
+                IsRead = book.IsRead,
+                DateRead = book.DateRead,
+                Rate = book.Rate,
+                Genero = book.Genero,
+                CoverUrl = book.CoverUrl,
+                PublisherName = book.Publisher.Name,
+                AuthorNames = book.Book_Author.Select(n => n.Author.FullName).ToList()
+            }).FirstOrDefault();
+            return _bookWithAuthors;
+        }
 
 
         // Método que nos permite modificar un libro que se encuentra en la BD

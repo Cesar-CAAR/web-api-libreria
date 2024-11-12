@@ -9,7 +9,7 @@ namespace Libreria_CAAR.Controllers
     [ApiController]
     public class AuthorsController : ControllerBase
     {
-        public AuthorsService  _authorsService;
+        public AuthorsService _authorsService;
         public AuthorsController(AuthorsService authorsService)
         {
             _authorsService = authorsService;
@@ -22,6 +22,15 @@ namespace Libreria_CAAR.Controllers
         {
             _authorsService.AddAuthor(author);
             return Ok();
+        }
+
+
+
+        [HttpGet("get-author-with-books-by-id/{id}")]
+        public IActionResult GetAuthorWithBooks(int id)
+        {
+            var response = _authorsService.GetAuthorWithBooks(id);
+            return Ok(response);
         }
     }
 }

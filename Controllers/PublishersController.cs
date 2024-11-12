@@ -18,10 +18,19 @@ namespace Libreria_CAAR.Controllers
 
 
         [HttpPost("add-publisher")]
-        public IActionResult AddPublishers([FromBody] PublisherVM publisher)
+        public IActionResult AddPublisher([FromBody] PublisherVM publisher)
         {
             _publishersService.AddPublisher(publisher);
             return Ok();
+        }
+
+
+
+        [HttpGet("get-publisher-books-with-authors/{id}")]
+        public IActionResult GetPubliserData(int id)
+        {
+            var _response = _publishersService.GetPublisherData(id);
+            return Ok(_response);
         }
     }
 }
