@@ -32,5 +32,14 @@ namespace Libreria_CAAR.Controllers
             var _response = _publishersService.GetPublisherData(id);
             return Ok(_response);
         }
+
+
+
+        [HttpDelete("delete-publisher-by-id/{id}")]
+        public IActionResult DeletePublisher(int id)
+        {
+            _publishersService.DeletePublisher(id);
+            return Ok();
+        }
     }
 }
