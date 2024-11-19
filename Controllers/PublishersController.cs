@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Libreria_CAAR.Data.Services;
 using Libreria_CAAR.Data.ViewModels;
+using System;
+using Libreria_CAAR.Exceptions;
 
 namespace Libreria_CAAR.Controllers
 {
@@ -20,8 +22,20 @@ namespace Libreria_CAAR.Controllers
         [HttpPost("add-publisher")]
         public IActionResult AddPublisher([FromBody] PublisherVM publisher)
         {
-            var newPublisher = _publishersService.AddPublisher(publisher);
-            return Created(nameof(AddPublisher), newPublisher);
+            try
+            {
+                var newPublisher = _publishersService.AddPublisher(publisher);
+                return Created(nameof(AddPublisher), newPublisher);
+            }
+            catch (PublisherNameException ex)
+            {
+                return BadRequest($"{ex.Message}, Nombre de la editora: {ex.PublisherName}");
+            } 
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
         }
 
 
@@ -54,8 +68,19 @@ namespace Libreria_CAAR.Controllers
         [HttpDelete("delete-publisher-by-id/{id}")]
         public IActionResult DeletePublisher(int id)
         {
-            _publishersService.DeletePublisher(id);
-            return Ok();
+            try
+            {
+                _publishersService.DeletePublisher(id);
+                return Ok();
+
+            }
+            catch (Exception ex)
+            {
+
+                return BadRequest(ex.Message);
+            }
+
+
         }
     }
 }

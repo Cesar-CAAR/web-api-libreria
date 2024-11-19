@@ -2,6 +2,8 @@
 using System.Linq;
 using Libreria_CAAR.Data.Models;
 using Libreria_CAAR.Data.ViewModels;
+using System.Text.RegularExpressions;
+using Libreria_CAAR.Exceptions;
 
 namespace Libreria_CAAR.Data.Services
 {
@@ -19,6 +21,9 @@ namespace Libreria_CAAR.Data.Services
         // Método que nos permite agregar una nueva Editora en la BD
         public Publisher AddPublisher(PublisherVM publisher)
         {
+            if (StringStartsWithNumber(publisher.Name)) throw new PublisherNameException("El nombre empieza con un numero", 
+                publisher.Name);
+
             var _publisher = new Publisher()
             {
                 Name = publisher.Name,
@@ -51,6 +56,8 @@ namespace Libreria_CAAR.Data.Services
             return _publisherData;
         }
 
+
+
         internal void DeletePublisher(int id)
         {
             var _publisher = _context.Publishers.FirstOrDefault(n => n.Id == id);
@@ -59,6 +66,15 @@ namespace Libreria_CAAR.Data.Services
                 _context.Publishers.Remove(_publisher);
                 _context.SaveChanges();
             }
+            else
+            {
+                throw new Exception($"La editora con el id: {id} no  existe!");
+            }
         }
+
+
+
+        private bool StringStartsWithNumber(string name) => (Regex.IsMatch(name, @"^\d"));
+
     }
 }
